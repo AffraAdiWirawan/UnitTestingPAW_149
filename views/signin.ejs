@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Baunk';
+            src: url('/fonts/baunk.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #000000;
+            color: white;
+            font-family: "Inter", serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+
+        .glass-effect {
+            background: linear-gradient(135deg, #030303, #080808);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+            border: 1px solid #0f0f0f;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .glass-effect:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-effect-input {
+            background-color: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .glass-effect-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-effect-input:focus {
+            border-color: rgba(255, 255, 255, 0.6);
+            outline: none;
+        }
+
+        .glass-effect-input:focus::placeholder {
+            color: transparent;
+        }
+
+        .custom-button {
+            background-color: #e5e5e5;
+            color: black;
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #d3d3d3;
+        }
+
+        .custom-link {
+            color: #ffffff;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .custom-link:hover {
+            color: #a3a3a3;
+        }
+
+        .logo-invert {
+            filter: invert(1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="glass-effect w-full max-w-sm">
+        <!-- Logo Image -->
+        <div class="flex justify-center mb-6">
+            <img src="/images/logo.png" alt="Logo" class="max-w-xs logo-invert">
+        </div>
+
+        <h2 class="text-2xl font-bold text-center mb-6 text-white">Sign Up</h2>
+
+        <p class="text-center text-white text-sm mb-4">Create your account to get started</p>
+
+        <form action="/auth/signup" method="POST" class="space-y-4">
+            <!-- Username Input -->
+            <div>
+                <input type="text" name="username" id="username" required placeholder="Username" class="w-full p-3 glass-effect-input focus:outline-none">
+            </div>
+
+            <!-- Email Input -->
+            <div>
+                <input type="email" name="email" id="email" required placeholder="Email" class="w-full p-3 glass-effect-input focus:outline-none">
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <input type="password" name="password" id="password" required placeholder="Password" class="w-full p-3 glass-effect-input focus:outline-none">
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="w-full custom-button focus:outline-none">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+
+        <p class="text-center mt-4 text-sm text-white">
+            Sudah punya akun? <a href="/auth/login" class="custom-link hover:text-indigo-700">Login</a>
+        </p>
+    </div>
+</body>
+</html>

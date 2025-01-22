@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Karyawan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .glass-effect {
+      background: linear-gradient(135deg, #030303, #080808);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #0f0f0f;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-effect:hover {
+      box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 200px;
+      font-weight: 300;
+      font-size: 2rem;
+      color: white;
+    }
+
+    .blank-spacer {
+      visibility: hidden;
+      height: 3rem;
+      margin-bottom: -20px;
+      padding: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #a3a3a3;
+      font-size: 0.9rem;
+      margin-top: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      background: #121212;
+      border: 1px solid #1f1f1f;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #555;
+    }
+
+    .custom-button {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background-color: #e5e5e5;
+      color: #171717;
+      font-weight: 300;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .custom-button:hover {
+      background-color: #a3a3a3;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .file-input {
+      margin-bottom: 1.5rem;
+    }
+
+    .back-icon {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-left: 16px;
+      margin-top: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .back-icon:hover {
+      color: #a3a3a3;
+    }
+
+    /* Alert Styles */
+    .alert {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4444;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: slideIn 0.5s ease-out;
+      z-index: 1000;
+    }
+
+    @keyframes slideIn {
+      from {
+        top: -50px;
+        opacity: 0;
+      }
+      to {
+        top: 20px;
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        top: 20px;
+        opacity: 1;
+      }
+      to {
+        top: -50px;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-effect">
+    <a href="/todo" class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <h1>Tambah Karyawan</h1>
+    <h1 class="blank-spacer">Teks tersembunyi</h1>
+    <form id="karyawanForm" action="/todo/tambah" method="POST" enctype="multipart/form-data">
+      <div class="form-row">
+        <div>
+          <label for="nama">Nama:</label>
+          <input type="text" id="nama" name="nama" required>
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="nomor_telepon">Nomor Telepon:</label>
+          <input type="text" id="nomor_telepon" name="nomor_telepon" required>
+        </div>
+        <div>
+          <label for="tanggal_lahir">Tanggal Lahir:</label>
+          <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="jenis_kelamin">Jenis Kelamin:</label>
+          <select id="jenis_kelamin" name="jenis_kelamin" required>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div>
+          <label for="tanggal_bergabung">Tanggal Bergabung:</label>
+          <input type="date" id="tanggal_bergabung" name="tanggal_bergabung" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="status_karyawan">Status Karyawan:</label>
+          <select id="status_karyawan" name="status_karyawan" required>
+            <option value="Aktif">Aktif</option>
+            <option value="Nonaktif">Nonaktif</option>
+          </select>
+        </div>
+        <div>
+          <label for="departemen">Departemen:</label>
+          <input type="text" id="departemen" name="departemen" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="tipe_kontrak">Tipe Kontrak:</label>
+          <select id="tipe_kontrak" name="tipe_kontrak" required>
+            <option value="Tetap">Tetap</option>
+            <option value="Kontrak">Kontrak</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+        <div>
+          <label for="pendidikan_terakhir">Pendidikan Terakhir:</label>
+          <input type="text" id="pendidikan_terakhir" name="pendidikan_terakhir" required>
+        </div>
+      </div>
+      <div>
+        <label for="jabatan">Jabatan:</label>
+        <input type="text" id="jabatan" name="jabatan" required>
+      </div>
+      <div>
+        <label for="catatan_tambahan">Alamat:</label>
+        <textarea id="catatan_tambahan" name="catatan_tambahan"></textarea>
+      </div>
+      <div class="file-input">
+        <label for="foto">Foto:</label>
+        <input type="file" id="foto" name="foto" required>
+      </div>
+      <button type="submit" class="custom-button">Tambah Karyawan</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('karyawanForm').addEventListener('submit', function(event) {
+      let isValid = true;
+      const inputs = document.querySelectorAll('#karyawanForm input, #karyawanForm select, #karyawanForm textarea');
+      
+      inputs.forEach(input => {
+        if (input.id !== 'catatan_tambahan' && !input.value.trim()) {
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        event.preventDefault();
+        showAlert('Semua data harus diisi!');
+      }
+    });
+
+    function showAlert(message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert';
+      alertDiv.textContent = message;
+      document.body.appendChild(alertDiv);
+
+      setTimeout(() => {
+        alertDiv.style.animation = 'slideOut 0.5s ease-out';
+        setTimeout(() => {
+          alertDiv.remove();
+        }, 500);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

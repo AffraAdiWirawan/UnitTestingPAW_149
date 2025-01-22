@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Gaji Karyawan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000; /* Background hitam */
+      font-family: 'Inter', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .glass-effect {
+      background: linear-gradient(135deg, #030303, #080808); /* Gradient background */
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #0f0f0f;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-effect:hover {
+      box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05); /* White halation effect */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem; /* Jarak bottom */
+      font-weight: 300; /* Font weight lebih ringan */
+      font-size: 2rem; /* Ukuran font diperbesar */
+      color: white;
+    }
+
+    label {
+
+      display: block;
+      margin-bottom: 5px;
+      color: #a3a3a3;
+      font-size: 0.9rem;
+      margin-top: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      background: #121212; /* Warna input */
+      border: 1px solid #1f1f1f;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #555;
+    }
+
+    .custom-button {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background-color: #e5e5e5;
+      color: #171717;
+      font-weight: 300; /* Font weight lebih ringan */
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem; /* Memberikan jarak ke atas */
+      font-size: 1rem; /* Ukuran font tombol */
+    }
+
+    .custom-button:hover {
+      background-color: #a3a3a3;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; /* Memberikan jarak horizontal antar kolom */
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .file-input {
+      margin-bottom: 1.5rem; /* Memberikan jarak tambahan ke bawah */
+    }
+
+
+    .back-icon {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-left: 16px;
+      margin-top: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .back-icon:hover {
+      color: #a3a3a3;
+    }
+
+    
+    .blank-spacer {
+      visibility: hidden; /* Menyembunyikan teks secara visual */
+      height: 3rem; /* Menentukan tinggi spacer */
+      margin-bottom: -20px; /* Menghapus margin default */
+      padding: 0; /* Menghapus padding default */
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-effect">
+    <a href="/gaji" class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <h1>Tambah Gaji Karyawan</h1>
+    <h1 class="blank-spacer">Teks tersembunyi</h1>
+    <form action="/gaji/tambah" method="POST">
+      <div>
+        <label for="id_karyawan">Pilih Karyawan:</label>
+        <select id="id_karyawan" name="id_karyawan" required>
+          <option value="">-- Pilih Karyawan --</option>
+          <% karyawan.forEach(function(karyawan) { %>
+            <option value="<%= karyawan.id %>">
+              <%= karyawan.nama %> - <%= karyawan.jabatan %>
+            </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="gaji_pokok">Gaji Pokok:</label>
+        <input type="number" id="gaji_pokok" name="gaji_pokok" required>
+      </div>
+
+      <div>
+        <label for="potongan">Potongan:</label>
+        <input type="number" id="potongan" name="potongan">
+      </div>
+
+      <div>
+        <label for="total_gaji">Total Gaji:</label>
+        <input type="number" id="total_gaji" name="total_gaji" required readonly>
+      </div>
+      <h1 class="blank-spacer">Teks tersembunyi</h1>
+      <button type="submit" class="custom-button">Tambah Gaji Karyawan</button>
+    </form>
+  </div>
+
+  <script>
+    // Script untuk menghitung total gaji secara otomatis
+    const gajiPokokInput = document.getElementById('gaji_pokok');
+    const potonganInput = document.getElementById('potongan');
+    const totalGajiInput = document.getElementById('total_gaji');
+
+    function hitungTotalGaji() {
+      const gajiPokok = parseFloat(gajiPokokInput.value) || 0;
+      const potongan = parseFloat(potonganInput.value) || 0;
+      const totalGaji = gajiPokok - potongan;
+      totalGajiInput.value = totalGaji;
+    }
+
+    gajiPokokInput.addEventListener('input', hitungTotalGaji);
+    potonganInput.addEventListener('input', hitungTotalGaji);
+  </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Data Karyawan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Baunk';
+            src: url('/fonts/baunk.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #000000;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: "Inter", serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+
+        .glass-effect {
+            background: linear-gradient(135deg, #030303, #080808);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+            border: 1px solid #0f0f0f;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .navbar {
+            font-family: 'Baunk', sans-serif;
+            background-color: #000000;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 6px 6px rgba(3, 3, 3, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1650px;
+            padding-top: 35px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar .nav-links a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #e5e5e5;
+            font-size: 0.9rem;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #a3a3a3;
+        }
+
+        .navbar .signout-btn {
+            background-color: #e5e5e5;
+            color: #171717;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .navbar .signout-btn:hover {
+            background-color: #a3a3a3;
+        }
+
+        .karyawan-title {
+            font-size: 1.875rem;
+            font-weight: 300;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .btn-purple {
+            background-color: #e5e5e5;
+            color: black;
+            font-weight: 400;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .btn-purple:hover {
+            background-color: #d3d3d3;
+        }
+
+        .headertr {
+            background-color: #080808;
+            backdrop-filter: blur(10px);
+            color: #d3d3d3;
+            font-weight: 200;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #171717;
+            padding: 8px;
+        }
+
+        .headertr th {
+            font-weight: 400;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-edit, .btn-delete {
+            background-color: #e5e5e5;
+            color: black;
+            font-weight: 400;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 120px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            background-color: #d3d3d3;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="images/pol2.png" alt="Logo" style="width: 10%; height: auto;">
+        <div class="nav-links">
+            <a href="/">Home User</a>
+            <a href="/homeadmin">Home Admin</a>
+            <a href="/todo">Karyawan</a>
+            <a href="/gaji">Gaji</a>
+            <a href="/jadwal">Jadwal</a>
+            <a href="/report">Report</a>
+        </div>
+        <a href="/auth/login" class="signout-btn">Sign Out</a>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        <h1 class="karyawan-title">Laporan Data Karyawan</h1>
+
+        <!-- Tombol Export to Excel -->
+        <div class="mb-6 text-center">
+            <button id="exportButton" class="btn-purple">Export to Excel</button>
+        </div>
+
+        <!-- Glass effect applied to the whole table -->
+        <div class="glass-effect">
+            <div class="overflow-auto">
+                <table class="min-w-full text-[#a3a3a3] border-separate" style="border-spacing: 0 10px; font-weight: 200; font-size: 12px;">
+                    <thead>
+                        <tr class="headertr">
+                            <th class="px-6 py-3 text-sm font-semibold">ID</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Nama</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Nomor Telepon</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Email</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Tanggal Lahir</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Jenis Kelamin</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Tanggal Bergabung</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Status Karyawan</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Departemen</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Tipe Kontrak</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Pendidikan Terakhir</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Jabatan</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Gaji Pokok</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Potongan</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Total Gaji</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Shift</th>
+                            <th class="px-6 py-3 text-sm font-semibold">Tanggal Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach(row => { %>
+                            <tr class="glass-effect text-center">
+                                <td class="px-6 py-4"><%= row.id %></td>
+                                <td class="px-6 py-4"><%= row.nama %></td>
+                                <td class="px-6 py-4"><%= row.nomor_telepon %></td>
+                                <td class="px-6 py-4"><%= row.email %></td>
+                                <td class="px-6 py-4"><%= row.tanggal_lahir ? row.tanggal_lahir.toISOString().split('T')[0] : '' %></td>
+                                <td class="px-6 py-4"><%= row.jenis_kelamin %></td>
+                                <td class="px-6 py-4"><%= row.tanggal_bergabung ? row.tanggal_bergabung.toISOString().split('T')[0] : '' %></td>
+                                <td class="px-6 py-4"><%= row.status_karyawan %></td>
+                                <td class="px-6 py-4"><%= row.departemen %></td>
+                                <td class="px-6 py-4"><%= row.tipe_kontrak %></td>
+                                <td class="px-6 py-4"><%= row.pendidikan_terakhir %></td>
+                                <td class="px-6 py-4"><%= row.jabatan %></td>
+                                <td class="px-6 py-4"><%= row.gaji_pokok ? row.gaji_pokok.toLocaleString() : '' %></td>
+                                <td class="px-6 py-4"><%= row.potongan ? row.potongan.toLocaleString() : '' %></td>
+                                <td class="px-6 py-4"><%= row.total_gaji ? row.total_gaji.toLocaleString() : '' %></td>
+                                <td class="px-6 py-4"><%= row.shift %></td>
+                                <td class="px-6 py-4"><%= row.tanggal ? row.tanggal.toISOString().split('T')[0] : '' %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('exportButton').addEventListener('click', function() {
+            // Buat URL untuk route /report/export
+            const url = '/report/export';
+    
+            // Lakukan fetch request ke route /report/export
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal mengunduh file');
+                    }
+                    return response.blob(); // Ambil file sebagai blob
+                })
+                .then(blob => {
+                    // Buat link untuk mengunduh file
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = 'data_karyawan.xlsx'; // Nama file yang akan diunduh
+                    document.body.appendChild(a);
+                    a.click(); // Klik link untuk memulai unduhan
+                    document.body.removeChild(a); // Hapus link setelah selesai
+                    window.URL.revokeObjectURL(downloadUrl); // Hapus URL objek
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Gagal mengunduh file Excel. Silakan coba lagi.');
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polaris</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom Styles */
+      .hero-section {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #000000, #0a0a0a);
+      }
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0.6;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+      }
+      .gradient-text {
+        background: linear-gradient(45deg, #ffffff, #cccccc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+  
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #ffffff, #cccccc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .footer {
+        background: #0a0a0a;
+        border-top: 1px solid #333333;
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      .map-container {
+        height: 400px;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 2rem;
+      }
+      .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white">
+    <!-- Hero Section -->
+    <section class="hero-section relative h-screen overflow-hidden">
+      <!-- Video -->
+      <video autoplay muted loop class="hero-video absolute top-0 left-0 w-full h-full object-cover">
+        <source src="./images/cinematic.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    
+      <!-- Konten -->
+      <div class="hero-content absolute inset-0 flex flex-col justify-center items-center text-center">
+        <h1 class="text-6xl font-bold mb-6 gradient-text">Welcome to Polaris Otomotif</h1>
+        <p class="text-xl mb-8 text-gray-300">Your trusted partner for automotive repair and maintenance.</p>
+        <a href="#introduction" class="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition duration-300" id="get-started">
+          Get Started
+        </a>
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 animate-bounce">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  
+    <!-- About Us Section (Section 1) -->
+    <section id="introduction" class="container mx-auto py-16 px-4 bg-black">
+      <div class="flex flex-col md:flex-row items-center">
+        <!-- Image on the left -->
+        <div class="w-full md:w-1/2 mb-8 md:mb-0">
+          <img src="images/car1.jpg" alt="Car Image" class="rounded-lg shadow-lg w-full h-auto">
+        </div>
+  
+        <!-- Title and description on the right -->
+        <div class="w-full md:w-1/2 md:pl-12">
+          <h2 class="section-title mb-6 text-3xl font-bold text-white">Tentang Polaris</h2>
+          <p class="text-gray-400 max-w-2xl mb-6 text-justify">
+            Polaris Otomotif adalah bengkel perbaikan dan perawatan otomotif terkemuka yang berdedikasi untuk menyediakan layanan berkualitas tinggi dan pelayanan pelanggan yang luar biasa. Dengan fokus pada ketepatan dan keandalan, kami memastikan kendaraan Anda berada di tangan terbaik.
+          </p>
+          <p class="text-gray-400 max-w-2xl mb-6 text-justify">
+            Tim teknisi bersertifikat kami dilengkapi dengan peralatan dan teknologi terkini untuk mendiagnosis dan memperbaiki segala masalah yang mungkin terjadi pada kendaraan Anda. Baik itu perawatan rutin atau perbaikan kompleks, kami berkomitmen untuk memberikan hasil yang melebihi harapan Anda.
+          </p>
+          <p class="text-gray-400 max-w-2xl mb-6 text-justify">
+            Di Polaris Otomotif, kami percaya pada membangun hubungan jangka panjang dengan pelanggan. Kepuasan Anda adalah prioritas kami, dan kami berusaha menciptakan pengalaman yang mulus sejak Anda memasuki bengkel kami.
+          </p>
+          <p class="text-gray-400 max-w-2xl text-justify">
+            Dengan pengalaman bertahun-tahun di industri otomotif, Polaris Otomotif telah menjadi pilihan utama bagi banyak pelanggan. Kami terus berinovasi dan meningkatkan layanan kami untuk memenuhi kebutuhan Anda.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- Script untuk Smooth Scroll -->
+  <script>
+    // Smooth scroll untuk tombol "Get Started" hingga section 1 saja
+    document.getElementById('get-started').addEventListener('click', function(event) {
+      event.preventDefault(); // Mencegah perilaku default link
+      const target = document.querySelector(this.getAttribute('href')); // Ambil elemen target (section 1)
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll ke target dengan animasi smooth
+    });
+  </script>
+
+
+
+
+
+
+<style>
+  /* Custom CSS untuk Card dan Efek Hover */
+.card {
+  background-color: #080808; /* Warna latar belakang card */
+  border: 2px solid #0d0d0d; /* Warna border card */
+  border-radius: 12px; /* Sudut card yang sedikit melengkung */
+  transition: all 0.3s ease-in-out; /* Transisi halus untuk efek hover */
+  overflow: hidden; /* Memastikan konten di dalam card tetap rapi */
+}
+
+.card:hover {
+  background-color: #0c0c0c; /* Warna latar belakang card saat hover */
+  border-color: #1b1b1b; /* Warna border card saat hover */
+  transform: translateY(-5px); /* Efek mengangkat card saat hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Bayangan yang lebih tebal saat hover */
+}
+
+/* Efek hover pada teks dan ikon */
+.card:hover h3 {
+  color: #fff; /* Warna teks judul saat hover */
+}
+
+.card:hover p {
+  color: #ccc; /* Warna teks deskripsi saat hover */
+}
+
+.card:hover img {
+  filter: brightness(1.2); /* Meningkatkan kecerahan ikon saat hover */
+}
+
+/* Animasi tambahan untuk efek modern */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.card:hover {
+  animation: float 3s ease-in-out infinite; /* Efek mengambang saat hover */
+}
+</style>
+<!-- Services Section -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center mb-12 text-3xl font-bold text-white">Layanan Kami</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Layanan 1: Perawatan Rutin -->
+      <div class="card p-6 text-center">
+        <div class=" p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/maintenance.png" alt="Perawatan Rutin" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Perawatan Rutin</h3>
+        <p class="text-gray-400 mt-2">
+          Layanan perawatan berkala seperti ganti oli, rotasi ban, dan pengecekan fluida untuk menjaga performa kendaraan.
+        </p>
+      </div>
+
+      <!-- Layanan 2: Perbaikan Mesin -->
+      <div class="card p-6 text-center">
+        <div class=" p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/repair.png" alt="Perbaikan Mesin" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Perbaikan Mesin</h3>
+        <p class="text-gray-400 mt-2">
+          Perbaikan mesin komprehensif untuk mengatasi masalah seperti mesin tidak menyala atau performa menurun.
+        </p>
+      </div>
+
+      <!-- Layanan 3: Perbaikan Sistem Rem -->
+      <div class="card p-6 text-center">
+        <div class=" p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/brake.png" alt="Perbaikan Sistem Rem" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Perbaikan Sistem Rem</h3>
+        <p class="text-gray-400 mt-2">
+          Ganti kampas rem, perbaikan cakram rem, dan pengecekan sistem ABS untuk keamanan berkendara.
+        </p>
+      </div>
+
+      <!-- Layanan 4: Perbaikan AC -->
+      <div class="card p-6 text-center">
+        <div class="p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/ac.png" alt="Perbaikan AC" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Perbaikan AC</h3>
+        <p class="text-gray-400 mt-2">
+          Servis AC, isi ulang freon, dan perbaikan kompresor untuk kenyamanan berkendara.
+        </p>
+      </div>
+
+      <!-- Layanan 5: Perbaikan Suspensi -->
+      <div class="card p-6 text-center">
+        <div class="p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/damper.png" alt="Perbaikan Suspensi" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Perbaikan Suspensi</h3>
+        <p class="text-gray-400 mt-2">
+          Ganti shock absorber, spooring, dan balancing untuk kenyamanan dan stabilitas berkendara.
+        </p>
+      </div>
+
+      <!-- Layanan 6: Modifikasi Kendaraan -->
+      <div class="card p-6 text-center">
+        <div class=" p-6 rounded-full inline-block">
+          <!-- Ikon Custom (Ganti dengan path gambar Anda) -->
+          <img src="images/modification.png" alt="Modifikasi Kendaraan" class="h-12 w-12">
+        </div>
+        <h3 class="text-xl font-semibold mt-6 text-white">Modifikasi Kendaraan</h3>
+        <p class="text-gray-400 mt-2">
+          Personalisasi kendaraan dengan modifikasi eksterior, interior, dan performa sesuai keinginan Anda.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- Media Partner Section -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center mb-12 text-3xl font-bold text-white">Media Partner</h2>
+    
+    <!-- Media Partner Logos - 10 Columns for Desktop, 2 Columns for Mobile -->
+    <div class="grid grid-cols-2 md:grid-cols-10 gap-8">
+      <!-- Logo 1 -->
+      <img src="images/toyota.png" alt="Toyota" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 2 -->
+      <img src="images/honda.png" alt="Honda" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 3 -->
+      <img src="images/yamaha.png" alt="Yamaha" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 4 -->
+      <img src="images/mitsubishi.png" alt="Mitsubishi" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 5 -->
+      <img src="images/suzuki.png" alt="Suzuki" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 6 -->
+      <img src="images/bosch.png" alt="Bosch" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 7 -->
+      <img src="images/bridgestone.png" alt="Bridgestone" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 8 -->
+      <img src="images/michelin.png" alt="Michelin" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 9 -->
+      <img src="images/castrol.png" alt="Castrol" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 10 -->
+      <img src="images/pertamina.png" alt="Pertamina" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 11 -->
+      <img src="images/allianz.png" alt="Allianz" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 12 -->
+      <img src="images/axa.png" alt="AXA" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 13 -->
+      <img src="images/autel.png" alt="Autel" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 14 -->
+      <img src="images/gojek.png" alt="Gojek" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 15 -->
+      <img src="images/grab.png" alt="Grab" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 16 -->
+      <img src="images/tokopedia.png" alt="Tokopedia" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 17 -->
+      <img src="images/shopee.png" alt="Shopee" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 18 -->
+      <img src="images/autofun.png" alt="Autofun" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 19 -->
+      <img src="images/adira.png" alt="Adira Finance" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+      <!-- Logo 20 -->
+      <img src="images/garmin.png" alt="Garmin" class="h-24 w-auto mx-auto transition-transform duration-300 hover:scale-110">
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+  .glass-effect {
+    background: linear-gradient(135deg, #030303, #080808);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #0f0f0f;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .glass-effect:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .card-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+  
+  .card-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .karyawan-title {
+    font-size: 1.875rem;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
+  .karyawan-nama {
+    margin-top: 25px;
+    font-size: 25px;
+    margin-bottom: 10px;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+  }
+
+  .karyawan-jabatan {
+    font-size: 17px;
+    font-weight: 200;
+    text-align: center;
+    color: #a3a3a3;
+    margin-bottom: 3rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 1400px; /* Diperlebar untuk menampung 7 kolom */
+    margin: 0 auto;
+  }
+</style>
+
+<section class="container">
+  <div>
+    <!-- Data Karyawan -->
+    <h2 class="section-title text-center mb-12 text-3xl font-bold text-white">Tim Kami</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+      <% karyawan.forEach(karyawan => { %>
+        <div class="glass-effect text-center" onclick="openModal('<%= karyawan.id %>')">
+          <div class="card-container w-full h-0 pb-100% relative">
+            <img 
+              src="<% if (karyawan.foto) { %>data:image/jpeg;base64,<%= karyawan.foto.toString('base64') %><% } else { %>default-image.jpg<% } %>" 
+              alt="Foto Karyawan" 
+              class="w-full h-full object-cover rounded-full mx-auto mb-4 absolute top-0 left-0"
+            />
+          </div>
+          <h2 class="karyawan-nama"><%= karyawan.nama %></h2>
+          <p class="karyawan-jabatan"><%= karyawan.jabatan || 'Tidak ada' %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="py-20 px-6 bg-black">
+  <div class="container mx-auto">
+    <!-- Judul Section -->
+    <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text">
+      Timeline Prestasi Kami
+    </h2>
+
+    <!-- Timeline Container -->
+    <div class="space-y-12">
+      <!-- Item 1 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right">
+          <h3 class="text-2xl font-semibold text-white">2014</h3>
+          <p class="text-gray-300">Berdirinya perusahaan dengan fokus pada layanan otomotif.</p>
+        </div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8"></div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right"></div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8">
+          <h3 class="text-2xl font-semibold text-white">2015</h3>
+          <p class="text-gray-300">Peluncuran layanan perawatan mobil premium.</p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right">
+          <h3 class="text-2xl font-semibold text-white">2016</h3>
+          <p class="text-gray-300">Mencapai 500 pelanggan setia.</p>
+        </div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8"></div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right"></div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8">
+          <h3 class="text-2xl font-semibold text-white">2017</h3>
+          <p class="text-gray-300">Memperkenalkan teknologi diagnostik canggih.</p>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right">
+          <h3 class="text-2xl font-semibold text-white">2018</h3>
+          <p class="text-gray-300">Membuka cabang pertama di luar kota.</p>
+        </div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8"></div>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right"></div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8">
+          <h3 class="text-2xl font-semibold text-white">2019</h3>
+          <p class="text-gray-300">Menerima penghargaan "Layanan Terbaik".</p>
+        </div>
+      </div>
+
+      <!-- Item 7 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right">
+          <h3 class="text-2xl font-semibold text-white">2020</h3>
+          <p class="text-gray-300">Ekspansi ke pasar internasional.</p>
+        </div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8"></div>
+      </div>
+
+      <!-- Item 8 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right"></div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8">
+          <h3 class="text-2xl font-semibold text-white">2021</h3>
+          <p class="text-gray-300">Mencapai 1000+ pelanggan setia.</p>
+        </div>
+      </div>
+
+      <!-- Item 9 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right">
+          <h3 class="text-2xl font-semibold text-white">2022</h3>
+          <p class="text-gray-300">Peluncuran aplikasi mobile untuk kemudahan pelanggan.</p>
+        </div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8"></div>
+      </div>
+
+      <!-- Item 10 -->
+      <div class="timeline-item flex items-center justify-between">
+        <div class="w-1/2 pr-8 text-right"></div>
+        <div class="w-12 h-12 flex items-center justify-center rounded-full" style="background-color: #080808; border: 2px solid #0d0d0d;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="w-1/2 pl-8">
+          <h3 class="text-2xl font-semibold text-white">2023</h3>
+          <p class="text-gray-300">Mengembangkan layanan berbasis AI untuk perawatan mobil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center mb-12 text-3xl font-bold">Apa Kata Mereka?</h2>
+    <!-- Slider main container -->
+    <div class="swiper-container">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+          <div class="card p-8 rounded-lg shadow-lg relative">
+            <div class="flex mb-4">
+              <!-- 5 stars -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <p class="text-gray-300 italic mb-12">
+              Workshop ini sangat profesional! Mobil saya kembali seperti baru setelah perawatan rutin. Pelayanannya cepat dan ramah.
+            </p>
+            <!-- User info at bottom left -->
+            <div class="absolute bottom-0 left-0 p-4 bg-black rounded-tr-lg">
+              <div class="flex items-center">
+                <img src="images/John.jpg" alt="User 1" class="h-12 w-12 rounded-full mr-4">
+                <div>
+                  <h3 class="text-xl font-semibold">John Doe</h3>
+                  <p class="text-sm text-gray-400">Pemilik Toyota Fortuner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+          <div class="card p-8 bg-gray-800 rounded-lg shadow-lg relative">
+            <div class="flex mb-4">
+              <!-- 5 stars -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <p class="text-gray-300 italic mb-12">
+              Sangat puas dengan perbaikan mesin yang dilakukan. Timnya ramah dan berpengalaman. Harga juga terjangkau!
+            </p>
+            <!-- User info at bottom left -->
+            <div class="absolute bottom-0 left-0 p-4 bg-black rounded-tr-lg">
+              <div class="flex items-center">
+                <img src="images/paul.webp" alt="User 2" class="h-12 w-12 rounded-full mr-4">
+                <div>
+                  <h3 class="text-xl font-semibold">Jane Smith</h3>
+                  <p class="text-sm text-gray-400">Pemilik Honda Civic</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+          <div class="card p-8 bg-gray-800 rounded-lg shadow-lg relative">
+            <div class="flex mb-4">
+              <!-- 5 stars -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <p class="text-gray-300 italic mb-12">
+              Modifikasi kendaraan saya sesuai ekspektasi. Hasilnya keren dan performa meningkat! Recommended banget!
+            </p>
+            <!-- User info at bottom left -->
+            <div class="absolute bottom-0 left-0 p-4 bg-black rounded-tr-lg">
+              <div class="flex items-center">
+                <img src="images/hann.jpg" alt="User 3" class="h-12 w-12 rounded-full mr-4">
+                <div>
+                  <h3 class="text-xl font-semibold">Michael Lee</h3>
+                  <p class="text-sm text-gray-400">Pemilik Mitsubishi Pajero</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    },
+  });
+</script>
+
+  <!-- Section Media Sosial -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center mb-12 text-3xl font-bold text-white">Ikuti Kami</h2>
+    <div class="flex justify-center space-x-8">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="w-12 h-12">
+      </a>
+      <!-- X (Twitter) -->
+      <a href="https://www.twitter.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="X (Twitter)" class="w-12 h-12">
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="w-12 h-12">
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Lokasi Section -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-center mb-12 text-3xl font-bold text-white">Lokasi Kami</h2>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d988.2146064133617!2d110.32548236961892!3d-7.8048086995134645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af80693fa883f%3A0x6b0083e5328a8706!2sGamping%20Kidul%2C%20Ambarketawang%2C%20Kec.%20Gamping%2C%20Kabupaten%20Sleman%2C%20Daerah%20Istimewa%20Yogyakarta%2055294!5e0!3m2!1sid!2sid!4v1736429772126!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Efek Invert dan Monokrom pada Map Container */
+  .map-container {
+    filter: grayscale(100%) invert(100%) contrast(100%); /* Monokrom (grayscale) + Invert */
+    transition: filter 0.3s ease; /* Efek transisi saat hover */
+    border-radius: 12px; /* Sudut melengkung */
+    overflow: hidden; /* Pastikan iframe tidak keluar dari container */
+  }
+
+  
+
+  /* Style untuk iframe */
+  .map-container iframe {
+    width: 100%;
+    height: 400px; /* Sesuaikan tinggi peta */
+    border: 0;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- Footer -->
+<footer class="footer py-12 bg-black">
+  <div class="container mx-auto px-4">
+    <!-- Teks Hak Cipta dan Tautan -->
+    <div class="text-center">
+      <p class="text-gray-400">
+        &copy; 2024 Polish Gromotif. All rights reserved.<br>
+        <a href="#" class="hover:text-white">Privacy Policy</a> | 
+        <a href="#" class="hover:text-white">Terms of Service</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>

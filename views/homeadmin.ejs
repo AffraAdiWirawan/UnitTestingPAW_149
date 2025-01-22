@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Baunk';
+      src: url('/fonts/baunk.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    body {
+      background-color: #000000;
+      color: white;
+      font-family: "Inter", serif;
+      font-optical-sizing: auto;
+      font-style: normal;
+    }
+
+    .glass-effect {
+      background: linear-gradient(135deg, #030303, #080808);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #0f0f0f;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .glass-effect:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+    }
+
+    .card-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 100%;
+    }
+    
+    .card-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      margin: 0px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #030303, #080808);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      padding: 5rem;
+      width: 1200px;
+      height: 700px;
+      max-width: none;
+      max-height: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .modal-header {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: rgb(255, 255, 255);
+      font-family: 'Baunk', sans-serif;
+      position: relative;
+    }
+
+    .modal-header .close-icon {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-header .close-icon:hover {
+      color: #a3a3a3;
+    }
+
+    .modal-body {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .modal-body img {
+      width: 310px;
+      height: 310px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .modal-body .info-container {
+      display: flex;
+      width: 100%;
+      gap: 1.5rem;
+    }
+
+    .modal-body .info-left,
+    .modal-body .info-right {
+      width: 50%;
+    }
+
+    .modal-body .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal-body .info-table th,
+    .modal-body .info-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #171717;
+    }
+
+    .modal-body .info-table th {
+      text-align: left;
+      color: #d4d4d4;
+      font-weight: 400;
+    }
+
+    .info-table tr {
+      color: #a3a3a3;
+      font-weight: 200;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .modal-footer .section {
+      width: 48%;
+    }
+
+    .modal-footer .section table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal-footer .section table th,
+    .modal-footer .section table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #171717;
+    }
+
+    .modal-footer .section table th {
+      text-align: left;
+      font-weight: bold;
+      color: #ddd;
+    }
+
+    .modal-footer .section h3 {
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .info-table1 {
+      font-weight: 400;
+      font-size: 13px;
+    }
+
+    .info-table1 th {
+      font-weight: 400;
+      font-size: 13px;
+    }
+
+    .info-table1 tr {
+      color: #a3a3a3;
+    }
+
+    .navbar {
+      font-family: 'Baunk', sans-serif;
+      background-color: #000000;
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 6px 6px rgba(3, 3, 3, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1650px;
+      padding-top: 35px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .navbar .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar .nav-links a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #e5e5e5;
+      font-size: 0.9rem;
+    }
+
+    .navbar .nav-links a:hover {
+      color: #a3a3a3;
+    }
+
+    .navbar .signout-btn {
+      background-color: #e5e5e5;
+      color: #171717;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .navbar .signout-btn:hover {
+      background-color: #a3a3a3;
+    }
+
+    .karyawan-title {
+      font-size: 1.875rem;
+      font-weight: 300;
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+    }
+
+    .karyawan-nama {
+      margin-top: 25px;
+      font-size: 25px;
+      margin-bottom: 10px;
+      font-weight: 300;
+      text-align: center;
+      color: white;
+    }
+
+    .karyawan-jabatan {
+      font-size: 17px;
+      font-weight: 200;
+      text-align: center;
+      color: #a3a3a3;
+      margin-bottom: 3rem;
+    }
+
+    .dashboard-card {
+      background: linear-gradient(135deg, #030303, #080808);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #0f0f0f;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dashboard-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+    }
+
+    .dashboard-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #e5e5e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .dashboard-card p {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <img src="images/pol2.png" alt="Logo" style="width: 10%; height: auto;">
+    <div class="nav-links">
+        <a href="/">Home User</a>
+        <a href="/homeadmin">Home Admin</a>
+        <a href="/todo">Karyawan</a>
+        <a href="/gaji">Gaji</a>
+        <a href="/jadwal">Jadwal</a>
+        <a href="/report">Report</a>
+    </div>
+    <a href="/auth/login" class="signout-btn">Sign Out</a>
+</nav>
+
+<!-- Card Total Karyawan -->
+<div class="flex justify-center mb-8">
+  <div class="dashboard-card text-center">
+    <h3>Total Karyawan</h3>
+    <p><%= karyawan.length %></p>
+  </div>
+</div>
+
+
+
+
+
+<style>
+  .glass-effect {
+    background: linear-gradient(135deg, #030303, #080808);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #0f0f0f;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .glass-effect:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .card-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+  
+  .card-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .karyawan-title {
+    font-size: 1.875rem;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
+  .karyawan-nama {
+    margin-top: 25px;
+    font-size: 19px;
+    margin-bottom: 10px;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+  }
+
+  .karyawan-jabatan {
+    font-size: 15px;
+    font-weight: 200;
+    text-align: center;
+    color: #a3a3a3;
+    margin-bottom: 3rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 1400px; /* Diperlebar untuk menampung 7 kolom */
+    margin: 0 auto;
+  }
+</style>
+
+<section class="container">
+  <div>
+    <!-- Data Karyawan -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+      <% karyawan.forEach(karyawan => { %>
+        <div class="glass-effect text-center" onclick="openModal('<%= karyawan.id %>')">
+          <div class="card-container w-full h-0 pb-100% relative">
+            <img 
+              src="<% if (karyawan.foto) { %>data:image/jpeg;base64,<%= karyawan.foto.toString('base64') %><% } else { %>default-image.jpg<% } %>" 
+              alt="Foto Karyawan" 
+              class="w-full h-full object-cover rounded-full mx-auto mb-4 absolute top-0 left-0"
+            />
+          </div>
+          <h2 class="karyawan-nama"><%= karyawan.nama %></h2>
+          <p class="karyawan-jabatan"><%= karyawan.jabatan || 'Tidak ada' %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+  <!-- Modal -->
+  <% karyawan.forEach(karyawan => { %>
+    <div class="modal-overlay" id="modal-<%= karyawan.id %>">
+      <div class="modal-content">
+        <div class="modal-header">
+          <i class="fas fa-times close-icon" onclick="closeModal('<%= karyawan.id %>')"></i>
+          <h2><%= karyawan.nama %></h2>
+        </div>
+        <div class="modal-body">
+          <div class="flex-shrink-0">
+            <img 
+              src="<% if (karyawan.foto) { %>data:image/jpeg;base64,<%= karyawan.foto.toString('base64') %><% } else { %>default-image.jpg<% } %>" 
+              alt="Foto Karyawan" 
+            />
+          </div>
+          <div class="info-container">
+            <div class="info-left">
+              <table class="info-table">
+                <tr>
+                  <th>ID:</th>
+                  <td><%= karyawan.id %></td>
+                </tr>
+                <tr>
+                  <th>Nama:</th>
+                  <td><%= karyawan.nama %></td>
+                </tr>
+                <tr>
+                  <th>Jabatan:</th>
+                  <td><%= karyawan.jabatan || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Email:</th>
+                  <td><%= karyawan.email %></td>
+                </tr>
+                <tr>
+                  <th>Nomor Telepon:</th>
+                  <td><%= karyawan.nomor_telepon || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Tanggal Lahir:</th>
+                  <td><%= karyawan.tanggal_lahir || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Jenis Kelamin:</th>
+                  <td><%= karyawan.jenis_kelamin || 'Tidak ada' %></td>
+                </tr>
+              </table>
+            </div>
+            <div class="info-right">
+              <table class="info-table">
+                <tr>
+                  <th>Departemen:</th>
+                  <td><%= karyawan.departemen || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Tanggal Bergabung:</th>
+                  <td><%= karyawan.tanggal_bergabung || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Status Karyawan:</th>
+                  <td><%= karyawan.status_karyawan || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Tipe Kontrak:</th>
+                  <td><%= karyawan.tipe_kontrak || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Pendidikan Terakhir:</th>
+                  <td><%= karyawan.pendidikan_terakhir || 'Tidak ada' %></td>
+                </tr>
+                <tr>
+                  <th>Alamat Karyawan:</th>
+                  <td><%= karyawan.catatan_tambahan || 'Tidak ada' %></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="section">
+            <h3 style="font-weight: 400; font-family: 'Baunk', sans-serif;">Gaji</h3>
+            <table class="info-table1">
+              <tr>
+                <th style="font-weight: 400;">Gaji Pokok:</th>
+                <td><%= karyawan.gaji_pokok || 'Tidak ada' %></td>
+              </tr>
+              <tr>
+                <th style="font-weight: 400;">Potongan:</th>
+                <td><%= karyawan.potongan || 'Tidak ada' %></td>
+              </tr>
+              <tr>
+                <th style="font-weight: 400;">Total Gaji:</th>
+                <td><%= karyawan.total_gaji || 'Tidak ada' %></td>
+              </tr>
+            </table>
+          </div>
+          <div class="section">
+            <h3 style="font-weight: 400; font-family: 'Baunk', sans-serif;">Jadwal Kerja</h3>
+            <table class="info-table1">
+              <tr>
+                <th style="font-weight: 400;">Shift:</th>
+                <td><%= karyawan.shift || 'Tidak ada' %></td>
+              </tr>
+              <tr>
+                <th style="font-weight: 400;">Tanggal:</th>
+                <td><%= karyawan.tanggal || 'Tidak ada' %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(`modal-${id}`).classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(`modal-${id}`).classList.remove('active');
+    }
+  </script>
+</body>
+</html>
